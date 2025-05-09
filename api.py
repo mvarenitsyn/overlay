@@ -33,7 +33,15 @@ def apply_overlay(canvas, spec):
             bg_img = bg_img.resize((ow, oh))
         else:                              # contain
             bg_img.thumbnail((ow, oh))
-        mask = Image.new("L", (ow, oh), 255)
+
+        # ---- NEW SHAPE MASK LOGIC ----
+        if spec["shape"] == "circle":
+            mask = Image.new("L", (ow, oh), 0)
+            ImageDraw.Draw(mask).ellipse((0, 0, ow, oh), fill=255)
+        else:  # rectangle (default)
+            mask = Image.new("L", (ow, oh), 255)
+        # ---- END NEW LOGIC ----
+
         layer.paste(bg_img, (cx - ow // 2, cy - oh // 2), mask)
 
     # border / shape
