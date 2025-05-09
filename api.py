@@ -39,7 +39,8 @@ def apply_overlay(canvas, spec):
             mask = Image.new("L", (ow, oh), 0)
             ImageDraw.Draw(mask).ellipse((0, 0, ow, oh), fill=255)
         else:  # rectangle (default)
-            mask = Image.new("L", (ow, oh), 255)
+            mask = Image.new("L", (ow, oh), 0)
+            ImageDraw.Draw(mask).rectangle((0, 0, ow, oh), fill=255)
         # ---- END NEW LOGIC ----
 
         layer.paste(bg_img, (cx - ow // 2, cy - oh // 2), mask)
